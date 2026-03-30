@@ -7,7 +7,7 @@ void encrypt_then_write(char c){
     char temp[7]; // los 7 caracteres aleatorios
 
     for(int i = 0; i < 7; i++){
-        temp[i] = rand() % 256;
+        temp[i] = (char) (rand() % 256);
     }
 
     if(write(1, temp, 7) == -1){
@@ -23,7 +23,7 @@ void encrypt_then_write(char c){
 
 int main(int argc, char *argv[])
 {
-    srand(time(NULL));
+    srand((unsigned int) time(NULL));
     
     if(argc > 1){
         // Encriptar desde los argumentos (argv[1])
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     } else {
         // Encriptar desde la entrada estándar
         char buffer;
-        int bytes_leidos;
+        ssize_t bytes_leidos;
         
         while ((bytes_leidos = read(0, &buffer, 1)) > 0) {
             encrypt_then_write(buffer);
